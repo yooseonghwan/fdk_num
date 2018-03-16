@@ -1,49 +1,202 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-<head>
-  <meta charset="UTF-8">
-  <title>Ionic App</title>
-  <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="msapplication-tap-highlight" content="no">
+<html lang="ko" ng-app="seachApp">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free coming soon template with jQuery countdown">
 
-  <link rel="icon" type="image/x-icon" href="assets/icon/favicon.ico">
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#4e8ef7">
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+	<link href="assets/css/bootstrap-theme.css" rel="stylesheet"> 
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet" />
+    
 
-  <!-- add to homescreen for ios -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  </head>
+  
+<!--  content -->
+<body ng-controller="seachCtl">
 
-  <!-- cordova.js required for cordova apps (remove if not needed) -->
-  <script src="cordova.js"></script>
+	<div id="wrapper">
+	
+		<div class="container">
 
-  <!-- un-comment this code to enable service worker
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js')
-        .then(() => console.log('service worker installed'))
-        .catch(err => console.error('Error', err));
-    }
-  </script>-->
+			<div class="list-group">
+			
+			
+			<div class="col-md-8 col-md-offset-2">
+   			  <form class="form-horizontal" role="form">
+     			  <h1>FDK 긴급연락망</h1> 
+        <div class="form-group">
+          <label for="input3" class="col-sm-4 control-label">Search By Department</label>
+          <div class="col-sm-6">
+                <select id="input3" class="form-control" ng-model="filterTxn.dep">
+                    <option value="">All</option>
+                     <option value="인사팀">인사팀</option> 
+                     <option value="법무팀">법무팀 </option>
+                     <option value="신규사업팀">신규사업팀 </option>
+                     <option value="전략기획팀">전략기획팀 </option>
+                     <option value="채널영업1팀">채널영업1팀</option>
+                     <option value="채널영업2팀">채널영업2팀</option>
+                     <option value="사업지원팀">사업지원팀</option>
+                     <option value="법인영업1팀">법인영업1팀</option>
+                     <option value="법인영업2팀">법인영업2팀</option>
+                     <option value="e-Biz영업팀">e-Biz영업팀</option>
+                     <option value="고객서비스팀">고객서비스팀</option>
+                     <option value="운영팀">운영팀</option>
+                     <option value="가맹점서비스팀">가맹점서비스팀</option>
+                     <option value="계약운영팀">계약운영팀</option>
+                     <option value="재무기획팀">재무기획팀</option> 
+                     <option value="회계팀">회계팀</option>
+                     <option value="IT기획팀">IT기획팀</option> 
+                     <option value="IT개발1팀">IT개발1팀</option>
+                     <option value="IT개발2팀">IT개발2팀</option>                          	
+					 <option value="IT개발3팀">IT개발3팀</option>
+					 <option value="IT운텽팀">IT운텽팀</option>
+					 <option value="ISCD">ISCD</option>
+					 <option value="데이터본사">데이터본사</option>
+					 <option value="데이터센터">데이터센터</option>  
 
-  <link href="build/main.css" rel="stylesheet">
+                  
+               </select>
+          </div>
+        </div>
 
-</head>
-<body>
+        <div class="form-group">
+          <label for="input1" class="col-sm-4 control-label">Search by Name</label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" id="input1" placeholder="Input Name" ng-model="filterTxn.name">
+          </div>
+        </div>
+			
+			<div class="cssload-container" ng-hide="hide">
+	<div class="cssload-whirlpool"></div>
+</div>
 
-  <!-- Ionic's root component and where the app will load -->
-  <ion-app></ion-app>
+    
+       <table class="table table-striped table-bordered" ng-hide="!hide">
+        <thead>
+          <tr>
+          	<th width="80px">Name</th>
+            <th>Dep</th>
+            <th>Number</th>
+          </tr>
+        </thead>
+           <tr ng-repeat="module in modules |filter:filterTxn | orderBy: 'name' " href="{{module.num}}" >
+                <td>{{module.name}}   </td> 
+                <td>{{module.dep}}   </td> 
+                <td><a ng-href="tel:{{module.no}}">  {{module.no}}    </a> </td>
+           </tr>
+       </table>
+    
+ </div> 
+   <!--  script -->
+   
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/angular.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/angular-route.min.js"></script>
+    <script src="assets/js/angular-resource.min.js"></script> 
+  
 
-  <!-- The polyfills js is generated during the build process -->
-  <script src="build/polyfills.js"></script>
 
-  <!-- The vendor js is generated during the build process
-       It contains all of the dependencies in node_modules -->
-  <script src="build/vendor.js"></script>
+	<script>
+	  var app = angular.module('seachApp', ['ngResource']);
 
-  <!-- The main bundle js is generated during the build process -->
-  <script src="build/main.js"></script>
+		//서비스로 $resource객체를 등록
+		app.service("$Fdk_list",function($resource){
 
-</body>
+			//$resource("주소","파라미터","메서드재정의")
+			//query() : 배열로 받아오기 : select(Read)
+			//get() : 1개 받아오기 : select(Read)
+			//delete() : delete(Delete)
+			//save() : insert(Create)
+
+			//update() : update(update) <-- 새로 만들기
+			
+			//mongolab 
+			//yooseonghwan
+			//sh0826
+
+			return $resource("https://api.mongolab.com/api/1/databases/fdk/collections/nums/:id",
+				{
+					"apiKey":"TvwpqPIcfFv_8fbW6qfCx8TClWkvRggS",
+					"id":"@_id.$oid"
+				},{
+					"update":{"method":"PUT"},
+					"delete":{"method":"DELETE"}
+				});
+		});
+		
+		
+	
+	  app.controller('seachCtl', 
+	   	['$scope','$Fdk_list', function($scope,$Fdk_list){
+	  	
+	 
+	   function getTelList() {
+
+			//로딩이미지 보여주기
+			$scope.hide=false;
+
+			$scope.modules = $Fdk_list.query(function(modules){
+				//서버에서 할일 목록을 받아오면
+				//여기에 호출
+				//할 일 목록을 다 받아왔으니까
+				//로딩이미지 숨기기
+				$scope.hide = true;
+
+				//브라우저의 개발자콘솔에 출력
+				console.log(modules);
+			});
+		}
+	  
+		getTelList();
+	  
+
+	  }]);
+
+		setTime();
+		
+		function setTime()
+		{
+			var beforeDateTime = '';
+		    var today = new Date();
+		    var nowDateTime = padZero(today.getHours())+":"+padZero(today.getMinutes())+":"+padZero(today.getSeconds());
+		    if(beforeDateTime != nowDateTime)
+		    {
+		        document.getElementById("timeShow").innerHTML = nowDateTime;
+		        beforeDateTime = nowDateTime;
+		       
+		    }
+		    setTimeout("setTime()",200);
+		}
+
+		function padZero(param)
+		{
+		    return "00".concat(param).match(/\d{2}$/);
+		}
+		
+		 app.filter('custom_filter', [function($filter) {
+
+                return function(inputArray, searchCriteria, dep){         
+                    if(!angular.isDefined(searchCriteria) || searchCriteria === ''){
+                        return inputArray;
+                    }         
+                    var data=[];
+                    angular.forEach(inputArray, function(item){             
+                        if(item.dep == dep){
+                            if(item.payee.name.toLowerCase().indexOf(searchCriteria.toLowerCase()) != -1){
+                                data.push(item);
+                            }
+                        }
+                    });      
+                 return data;
+               };
+             }]);
+
+	  </script>
+	
+
+  </body>
 </html>

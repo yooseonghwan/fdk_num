@@ -1,0 +1,17 @@
+<!-- <div class="list-group">
+	           <div ng-repeat="module in todos| filter:name | orderBy: 'name'" href="{{module.num}}" class="list-group-item">
+	               <a href="tel:{{module.no}}" title="Code"> 
+	                 <h4 class="list-group-item-heading"> <i class="fa fa-user"></i>{{module.name}} 
+	                   	<i class="fa fa-phone-square"> </i> {{module.no}} </a> </h4>	                           	
+	            </div>
+</div>
+<img src="assets/img/loader_img.gif" ng-hide="hide" width="100px" 	height="100px" /> -->
+
+<div class="list-group">
+	           <div ng-repeat="module in todos| filter:name | orderBy: 'name'" href="{{module.num}}" class="list-group-item">
+	              	<div ng-click="phonecallTab(module.no)">
+	                   <h4 class="list-group-item-heading"> <i class="fa fa-user"></i>{{module.name}} 
+	                   	<i class="fa fa-phone-square"> </i> {{module.no}} </h4>	   </div>                        	
+	            </div>
+</div>
+<img src="assets/img/loader_img.gif" ng-hide="hide" width="100px" 	height="100px" />

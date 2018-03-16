@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko" ng-app="seachApp">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free coming soon template with jQuery countdown">
+
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+	<link href="assets/css/bootstrap-theme.css" rel="stylesheet"> 
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet" />
+   
+
+  </head>
+  
+<!--  content -->
+  <body >
+	<div id="wrapper">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12 col-md-12 col-lg-12">
+					<h1>FDK 긴급 연락망</h1>	
+					
+					<h2 class="subtitle"> {{today | date:'yyyy-MM-dd HH:mm:ss '}} </h2>
+
+					<p class="text-muted">Beta <i class="fa fa-hand-peace-o"></i> ersion</p> 
+
+					<div id="countdown">
+					<form class="form-inline signup" role="form">
+			            <div class="input-group" style="width:340px;text-align:center;margin:0 auto;">            
+			              <input class="form-control input-lg" 
+			              type="search" ng-model="name" id="search" aria-label="Phones_no" autofocus="autofocus" placeholder="search..."></input>	
+			            </div>  
+					</form>				   
+				</div>
+
+			</div> 	
+		</div>
+				<br>
+				<br>
+
+		  <div class="container">
+			<ng-view></ng-view>
+		  </div>
+	</div>	 
+	<!--  footer -->
+	
+	<p class="text-muted">Last Updated 2015-09-11 <i class="fa fa-battery-full"></i></p> 
+
+	   </div> 
+	
+   <!--  script -->
+   
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/angular.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/angular-route.min.js"></script>
+    <script src="assets/js/angular-resource.min.js"></script> 
+
+
+<script>
+	  var app = angular.module('seachApp', 
+	  	['ngRoute','ngResource']);
+
+
+		app.config(function($routeProvider){
+
+		$routeProvider.when("/list",{
+			templateUrl:"view/list.html",
+			controller:"seachCtl"
+		});
+
+		$routeProvider.otherwise({redirectTo:"/list"});
+
+		});
+
+		//서비스로 $resource객체를 등록
+		app.service("$Fdk_list",function($resource){
+
+			//$resource("주소","파라미터","메서드재정의")
+			//query() : 배열로 받아오기 : select(Read)
+			//get() : 1개 받아오기 : select(Read)
+			//delete() : delete(Delete)
+			//save() : insert(Create)
+
+			//update() : update(update) <-- 새로 만들기
+			
+			//mongolab 
+			//yooseonghwan
+			//sh0826
+
+			return $resource("https://api.mongolab.com/api/1/databases/fdk/collections/nums/:id",
+				{
+					"apiKey":"TvwpqPIcfFv_8fbW6qfCx8TClWkvRggS",
+					"id":"@_id.$oid"
+				},{
+					"update":{"method":"PUT"},
+					"delete":{"method":"DELETE"}
+				});
+		});
+
+	  app.controller('seachCtl', 
+	  	['$scope','$Fdk_list', function($scope,$Fdk_list){
+	  	
+	   
+	  	
+	  	var today	= new Date();
+		$scope.today = today; 
+
+/* 	 $scope.phonecallTab = function ( phonenumber ) {
+			 var call = "tel:" + phonenumber;
+	 	cordova.exec(sayHelloSuccess,sayHelloFailure,"call","intent_call",[call])
+	 
+	 	
+	 	} */
+
+	  function getTelList() {
+
+			//로딩이미지 보여주기
+			$scope.hide=false;
+
+			$scope.todos = $Fdk_list.query(function(todos){
+				//서버에서 할일 목록을 받아오면
+				//여기에 호출
+				//할 일 목록을 다 받아왔으니까
+				//로딩이미지 숨기기
+				$scope.hide = true;
+
+				//브라우저의 개발자콘솔에 출력
+				console.log(todos);
+			});
+		}
+
+	  		
+	
+		getTelList();
+	  
+
+	  }]);
+
+
+	  </script>
+	
+
+  </body>
+</html>
