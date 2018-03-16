@@ -39,26 +39,49 @@
 
         <div class="col-md-8 col-md-offset-2">
           <form class="form-horizontal" role="form">
-            <br>
+            <!-- <h1>FDK 긴급연락망</h1>  -->
+             <!-- <div class="form-group">
+              <label for="input3" class="col-sm-4 control-label">Search By Department</label>
+
+               <div class="col-sm-6">
+                <select id="input3" class="form-control" ng-model="filterTxn.dep">
+                  <option value="">All</option>
+                  <option value="인사팀">인사팀</option>
+                  <option value="법무팀">법무팀 </option>
+                  <option value="신규사업팀">신규사업팀 </option>
+                  <option value="전략기획팀">전략기획팀 </option>
+                  <option value="채널영업1팀">채널영업1팀</option>
+                  <option value="채널영업2팀">채널영업2팀</option>
+                  <option value="사업지원팀">사업지원팀</option>
+                  <option value="법인영업1팀">법인영업1팀</option>
+                  <option value="법인영업2팀">법인영업2팀</option>
+                  <option value="e-Biz영업팀">e-Biz영업팀</option>
+                  <option value="고객서비스팀">고객서비스팀</option>
+                  <option value="운영팀">운영팀</option>
+                  <option value="가맹점서비스팀">가맹점서비스팀</option>
+                  <option value="계약운영팀">계약운영팀</option>
+                  <option value="재무기획팀">재무기획팀</option>
+                  <option value="회계팀">회계팀</option>
+                  <option value="IT기획팀">IT기획팀</option>
+                  <option value="IT개발1팀">IT개발1팀</option>
+                  <option value="IT개발2팀">IT개발2팀</option>
+                  <option value="IT개발3팀">IT개발3팀</option>
+                  <option value="IT운텽팀">IT운텽팀</option>
+                  <option value="ISCD">ISCD</option>
+                  <option value="데이터본사">데이터본사</option>
+                  <option value="데이터센터">데이터센터</option>
+
+
+                </select>
+              </div> 
+            </div>  -->
+
 
             <div class="form-group">
-              <h3>Search Key
-                <span class="badge badge-secondary"></span>
-              </h3>
-              <br>
-
-              <div class="row">
-                <div class="col-sm-10 ">
-                  <input type="text" class="form-control" id="input1" placeholder="Input Key" ng-model="filterTxn.name">
-                </div>
-                <div class="col-sm-2">
-                  <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#ModalCenter">
-                    Plus
-                  </button>
-
-                </div>
+              <label for="input1" class="col-sm-4 control-label">Search Name</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="input1" placeholder="Input Name" ng-model="filterTxn.name">
               </div>
-
             </div>
 
             <div class="cssload-container" ng-hide="hide">
@@ -66,31 +89,24 @@
             </div>
 
 
-            <table class="table" ng-hide="!hide">
+              
+            <table class="table table-striped table-bordered" ng-hide="!hide">
               <thead>
                 <tr>
-                  <th>#</th>
-                  <th>Key</th>
-                  <th>Content</th>
-                  <th>Type</th>
-                  <th>Memo</th>
-                  <th>Option</th>
+                  <th width="80px">Name</th>                 
+                  <th>Number</th>
+                  <th>etc</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr ng-repeat="module in modules |filter:filterTxn | orderBy: 'name' ">
-                  <th scope="row"> {{$index + 1}}</th>
-                  <td>{{module.name}} </td>
-                  <td>
-                    <a ng-href="tel:{{module.no}}"> {{module.no}} </a>
-                  </td>
-                  <td>{{module.type}} </td>
-                  <td>{{module.memo}} </td>
-                  <td>
-                    <a data-toggle="modal" data-target="#ModalCenter_delete" ng-click="myFuncDel(module._id.$oid)"> Delete </a>
-                  </td>
-                </tr>
-              </tbody>
+              <tr ng-repeat="module in modules |filter:filterTxn | orderBy: 'name' " href="{{module.num}}">
+                <td>{{module.name}} </td>               
+                <td>
+                  <a ng-href="tel:{{module.no}}"> {{module.no}} </a>
+                </td>
+                <td>
+                  <a ng-click="myFuncDel(module._id.$oid)"> Delete </a>
+                </td>
+              </tr>
             </table>
 
         </div>
@@ -100,63 +116,23 @@
       </div>
     </div>
 
-
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+      ADD
+    </button>
 
     <!-- Modal -->
-    <div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLongTitle">Add</h5>
 
           </div>
-          <div class="modal-body">
-
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">key</span>
-              </div>
-              <input type="text" id="employeeName" class="form-control" placeholder="Key" aria-label="Username" aria-describedby="basic-addon1">
-            </div>
-
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">content</span>
-              </div>
-              <input type="text" id="employeeNumber" class="form-control" placeholder="content" aria-label="content" aria-describedby="basic-addon1">
-            </div>
-
-
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">Type</span>
-              </div>
-
-              <select id="employeeType" class="form-control">
-                <option selected>Telephone </option>
-                <option>URL</option>
-              </select>
-
-              <input type="text" id="employeeNumber" class="form-control" placeholder="content" aria-label="content" aria-describedby="basic-addon1">
-            </div>
-
-
-
-            <div class="input-groupU mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">Memo</span>
-              </div>
-              <input type="text" id="employeeNumemployeeMemober" class="form-control" placeholder="Memo" aria-label="content" aria-describedby="basic-addon1">
-            </div>
-
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">password</span>
-              </div>
-              <input type="text" id="code" class="form-control" placeholder="password" aria-label="content" aria-describedby="basic-addon1">
-            </div>
-
-
+          <div class="modal-body">           
+            <input type="text" class="form-control" id="employeeName" aria-describedby="name" placeholder="name">
+            <input type="text" class="form-control" id="employeeNumber" aria-describedby="number" placeholder="content">
+            <input type="text" class="form-control" id="code" aria-describedby="number" placeholder="Password">
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -166,27 +142,7 @@
       </div>
     </div>
 
-    <!-- Password Modal -->
-    <div class="modal fade" id="ModalCenter_delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">Delete</h5>
-
-          </div>
-          <div class="modal-body">
-            <input type="text" class="form-control" id="deletecode" aria-describedby="number" placeholder="Password">
-            <input type="hidden" class="form-control" id="deleteIdCode" aria-describedby="number">
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" onclick="mongoDBdelete()" class="btn btn-primary">Delete</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
+    
 
   </div>
 
@@ -253,25 +209,27 @@
         //삭제 로직 
         $scope.myFuncDel = function (id) {
 
-          $("#deleteIdCode").val(id);
-
+          var password = prompt("Please enter password ", "");
+          if (password == "1234!") {
+            mongoDBdelete(id);
+          }
         };
 
         //추가 로직 
         $scope.myFuncIns = function () {
 
-          var password = $("#code").val();
-
-          if (password != "1234!") {
-            alert("비번이 틀렸습니다.");
-          } else {
+           var password = $("#code").val();
+        
+           if (password !="1234!") {
+             alert("비번이 틀렸습니다.");
+           }else{
             var name = $("#employeeName").val();
             var number = $("#employeeNumber").val();
 
-            mongoDBinsert(name, number);
-          }
-
-
+            mongoDBinsert(name,number);
+           }
+           
+          
         };
 
 
@@ -317,16 +275,8 @@
 
     //  $http.post("https://api.mongolab.com/api/1/databases/fdk/collections/nums/", param)
 
-    function mongoDBdelete() {
-
-      var password = $("#deletecode").val();
-      var id = $("#deleteIdCode").val();
-
-      if (password != "1234!") {
-        alert("비번이 틀렸습니다.");
-        return;
-      }
-
+    function mongoDBdelete(id) {
+      alert('Are you sure you want to delete?');
       $.ajax({
         url: "https://api.mlab.com/api/1/databases/fdk/collections/nums/" + id + "?apiKey=TvwpqPIcfFv_8fbW6qfCx8TClWkvRggS",
         type: "DELETE",
@@ -334,9 +284,7 @@
         timeout: 300000,
         success: function (data) {
           console.log("successresponse=" + data);
-          alert("Deleted");
-          location.reload();
-
+          alert("Deleted.")
         },
         error: function (xhr, status, err) {
           console.log("successresponse=" + xhr);
@@ -347,18 +295,19 @@
     }
 
     function mongoDBinsert(name, phone) {
+      alert('are your sure?');
+
       $.ajax({
         url: "https://api.mlab.com/api/1/databases/fdk/collections/nums?apiKey=TvwpqPIcfFv_8fbW6qfCx8TClWkvRggS",
-        data: JSON.stringify({ "name": name, "no": phone, "dep": "" }),
-        contentType: "application/json",
+        data: JSON.stringify( { "name" : name,"no" : phone, "dep": ""} ),
+        contentType: "application/json" ,
         type: "POST",
         async: true,
         timeout: 300000,
         success: function (data) {
           console.log("successresponse=" + data);
-          alert("saved");
-          location.reload();
-
+          alert("saved.");
+          getTelList();
         },
         error: function (xhr, status, err) {
           console.log("successresponse=" + xhr);
